@@ -1,9 +1,44 @@
-class Demo1 extends AdventureScene {
+class Room1 extends AdventureScene {
     constructor() {
-        super("demo1", "First Room");
+        super("Room1", "First Room");
+    }
+
+    preload(){
+        this.load.path = "./assets/";
+        this.load.image('door', 'door.png');
+        this.load.image('down', 'down.png');
+
+
+
     }
 
     onEnter() {
+
+
+        this.door1 = this.add.image(
+            100,
+            400,
+            'door',
+        )
+        this.door1.setScale(.5) //resize
+        .setInteractive()
+        .on('pointerover', () => {
+            if (this.hasItem("key")) {
+                this.showMessage("You've got the key for this door.");
+            } else {
+                this.showMessage("It's locked. Can you find a key?");
+            }
+        })
+        .on('pointerdown', () => {
+            if (this.hasItem("key")) {
+                //this.loseItem("key");
+                this.showMessage("*squeak*");
+                door.setText("unlocked door");
+                this.gotoScene('Room2');
+            }
+        })
+
+
 
         let clip = this.add.text(this.w * 0.3, this.w * 0.3, "📎 paperclip")
             .setFontSize(this.s * 2)
@@ -38,6 +73,10 @@ class Demo1 extends AdventureScene {
                     onComplete: () => key.destroy()
                 });
             })
+            
+            if (this.hasItem("key")) {
+                key.destroy()
+            }
 
         let door = this.add.text(this.w * 0.1, this.w * 0.15, "🚪 locked door")
             .setFontSize(this.s * 2)
@@ -51,21 +90,47 @@ class Demo1 extends AdventureScene {
             })
             .on('pointerdown', () => {
                 if (this.hasItem("key")) {
-                    this.loseItem("key");
+                    //this.loseItem("key");
                     this.showMessage("*squeak*");
                     door.setText("🚪 unlocked door");
-                    this.gotoScene('demo2');
+                    this.gotoScene('Room2');
                 }
             })
 
     }
 }
 
-class Demo2 extends AdventureScene {
+class Room2 extends AdventureScene {
     constructor() {
-        super("demo2", "The second room has a long name (it truly does).");
+        super("Room2", "The second room has a long name (it truly does).");
+    }
+
+    preload(){
+        this.load.path = "./assets/";
+        this.load.image('door', 'door.png');
+        this.load.image('down', 'down.png');
+
+
+
     }
     onEnter() {
+
+        this.down1 = this.add.image(
+            650,
+            900,
+            'down',
+        )
+        this.down1.setScale(.5) //resize
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage("Go back");
+        })
+        .on('pointerdown', () => {
+            this.gotoScene('Room1');
+        });
+
+
+
         this.add.text(this.w * 0.3, this.w * 0.4, "just go back")
             .setFontSize(this.s * 2)
             .setInteractive()
@@ -73,7 +138,7 @@ class Demo2 extends AdventureScene {
                 this.showMessage("You've got no other choice, really.");
             })
             .on('pointerdown', () => {
-                this.gotoScene('demo1');
+                this.gotoScene('Room1');
             });
 
         let finish = this.add.text(this.w * 0.6, this.w * 0.2, '(finish the game)')
@@ -90,6 +155,34 @@ class Demo2 extends AdventureScene {
             })
             .on('pointerdown', () => this.gotoScene('outro'));
     }
+    
+}
+
+class Room3 extends AdventureScene {
+    constructor() {
+        super("Room3", "The second room has a long name (it truly does).");
+    }
+    onEnter() {
+
+    }
+}
+
+class Room4 extends AdventureScene {
+    constructor() {
+        super("Room4", "The second room has a long name (it truly does).");
+    }
+    onEnter() {
+
+    }
+}
+
+class Room5 extends AdventureScene {
+    constructor() {
+        super("Room5", "The second room has a long name (it truly does).");
+    }
+    onEnter() {
+
+    }
 }
 
 class Intro extends Phaser.Scene {
@@ -101,7 +194,7 @@ class Intro extends Phaser.Scene {
         this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
-            this.time.delayedCall(1000, () => this.scene.start('demo1'));
+            this.time.delayedCall(1000, () => this.scene.start('Room1'));
         });
     }
 }
@@ -125,7 +218,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Intro, Demo1, Demo2, Outro],
+    scene: [Intro, Room1, Room2, Room3, Outro],
     title: "Adventure Game",
 });
 
