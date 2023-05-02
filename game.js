@@ -10,6 +10,7 @@ class Room1 extends AdventureScene {
         this.load.image('gun', 'gun.png');
         this.load.image('hold', 'Hold.png');
         this.load.image('drawr', 'drawr.png');
+        this.load.image('zom', 'zom.png');
         this.load.image('background', 'wallpaper.png');
 
     }
@@ -52,6 +53,8 @@ class Room1 extends AdventureScene {
         //     }
         // })
 
+        
+
         //DRAWRS
         this.drawr = this.add.image(
             700,
@@ -64,8 +67,24 @@ class Room1 extends AdventureScene {
 
             })
             .on('pointerdown', () => {
-                this.showMessage("Empty");
+                this.showMessage("Useless trash");
             })
+        
+        this.drawr = this.add.image(
+            450,
+            650,
+            'drawr',
+        )
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Drawr");
+
+            })
+            .on('pointerdown', () => {
+                this.showMessage("You pick up a magazine.");
+                this.gainItem('Bullets');
+            })
+        
         this.drawr = this.add.image(
             870,
             650,
@@ -109,12 +128,40 @@ class Room1 extends AdventureScene {
            this.showMessage("Right Door");
 
         })
+        
         .on('pointerdown', () => {
                 this.showMessage("*squeak*");
                 this.gotoScene('Room3');
     
         })
-
+        this.zom = this.add.image(
+            950,
+            815,
+            'zom',
+        )
+        .setInteractive()
+        .on('pointerover', () => {
+            if (this.hasItem("Bullets")) {
+                this.showMessage("Shoot");
+            } else {
+                this.showMessage("*Click* No bullets");
+            }
+        })
+        .on('pointerdown', () => {
+            if (this.hasItem("Bullets")) {
+                //this.loseItem("key");
+                this.showMessage("*Bang*");
+                this.tweens.add({
+                    targets: this.zom,
+                    x: '+=' + this.s,
+                    y: `-=${5 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                    onComplete: () => this.zom.destroy()
+                });
+                
+            }
+        })
 
 
         // let clip = this.add.text(this.w * 0.3, this.w * 0.3, "📎 paperclip")
@@ -463,6 +510,8 @@ class Room4 extends AdventureScene {
         this.load.path = "./assets/";
         this.load.image('door', 'door.png');
         this.load.image('down', 'down.png');
+        this.load.image('zom', 'zom.png');
+        this.load.image('hole', 'hole.png');
         this.load.image('hold', 'Hold.png');
         this.load.image('background', 'wallpaper.png');
 
@@ -473,6 +522,13 @@ class Room4 extends AdventureScene {
         const roombg = this.add.image(0, 0, 'background');
         roombg.setOrigin(0);
         roombg.setDepth(0);
+        
+        this.zom = this.add.image(
+            950,
+            815,
+            'zom',
+        )
+
         if (this.hasItem("Gun")) {
             this.hold = this.add.image(
                 1000,
