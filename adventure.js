@@ -63,6 +63,17 @@ class AdventureScene extends Phaser.Scene {
         });
     }
 
+    showMessageToughts(message) {
+        this.messageBox.setText(message);
+        this.messageBox.setStyle({ fontSize: '25px' });
+        this.tweens.add({
+            targets: this.messageBox,
+            alpha: { from: 1, to: 0 },
+            easing: 'Quintic.in',
+            duration: 15 * this.transitionDuration
+        });
+    }
+
     updateInventory() {
         if (this.inventory.length > 0) {
             this.tweens.add({
@@ -90,6 +101,11 @@ class AdventureScene extends Phaser.Scene {
             this.inventoryTexts.push(text);
         });
     }
+
+    hasGun(){
+        return this.inventory.includes('Gun');
+    }
+
 
     hasItem(item) {
         return this.inventory.includes(item);
@@ -147,4 +163,13 @@ class AdventureScene extends Phaser.Scene {
     onEnter() {
         console.warn('This AdventureScene did not implement onEnter():', this.constructor.name);
     }
+
+    Back() {
+        const previousScene = this.scene.getPreviousScene();
+        if (previousScene) {
+          this.scene.stop(this.scene.key); // Stop the current scene
+          this.scene.run(previousScene.scene.key); // Run the previous scene
+        }
+      }
+
 }

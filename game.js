@@ -76,11 +76,13 @@ class Room1 extends AdventureScene {
         )
             .setInteractive()
             .on('pointerover', () => {
-                this.showMessage("Drawer");
+                this.showMessageToughts("Drawer");
+                
 
             })
             .on('pointerdown', () => {
                 this.showMessage("Useless trash");
+                
             })
         
         this.drawr = this.add.image(
@@ -498,13 +500,14 @@ class Room3 extends AdventureScene {
             repeat: -1,
         });
         
-        if (this.hasItem("Gun")) {
-            this.hold = this.add.image(
-                1000,
-                815,
-                'hold',
-            )
-        }
+        // if (this.hasItem("Gun")) {
+        //     this.hold = this.add.image(
+        //         1000,
+        //         815,
+        //         'hold',
+        //     )
+        // }
+        
     }
     
 }
@@ -682,6 +685,7 @@ class Room5 extends AdventureScene {
                 'hold',
             )
         }
+        
     }
 }
 
@@ -720,6 +724,8 @@ class Outro1 extends Phaser.Scene {
         this.input.on('pointerdown', () => this.scene.start('intro'));
     }
 }
+
+
 
 const game = new Phaser.Game({
     scale: {
