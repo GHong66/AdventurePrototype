@@ -9,10 +9,8 @@ class Room1 extends AdventureScene {
         this.load.image('down', 'down.png');
         this.load.image('gun', 'gun.png');
         this.load.image('hold', 'Hold.png');
+        this.load.image('drawr', 'drawr.png');
         this.load.image('background', 'wallpaper.png');
-
-
-
 
     }
 
@@ -54,6 +52,34 @@ class Room1 extends AdventureScene {
         //     }
         // })
 
+        //DRAWRS
+        this.drawr = this.add.image(
+            700,
+            650,
+            'drawr',
+        )
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Drawr");
+
+            })
+            .on('pointerdown', () => {
+                this.showMessage("Empty");
+            })
+        this.drawr = this.add.image(
+            870,
+            650,
+            'drawr',
+        )
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Drawr");
+
+            })
+            .on('pointerdown', () => {
+                this.showMessage("Empty");
+            })
+
         this.door1 = this.add.image(
             400,
             570,
@@ -91,21 +117,21 @@ class Room1 extends AdventureScene {
 
 
 
-        let clip = this.add.text(this.w * 0.3, this.w * 0.3, "📎 paperclip")
-            .setFontSize(this.s * 2)
-            .setInteractive()
-            .on('pointerover', () => this.showMessage("Metal, bent."))
-            .on('pointerdown', () => {
-                this.showMessage("No touching!");
-                this.tweens.add({
-                    targets: clip,
-                    x: '+=' + this.s,
-                    repeat: 2,
-                    yoyo: true,
-                    ease: 'Sine.inOut',
-                    duration: 100
-                });
-            });
+        // let clip = this.add.text(this.w * 0.3, this.w * 0.3, "📎 paperclip")
+        //     .setFontSize(this.s * 2)
+        //     .setInteractive()
+        //     .on('pointerover', () => this.showMessage("Metal, bent."))
+        //     .on('pointerdown', () => {
+        //         this.showMessage("No touching!");
+        //         this.tweens.add({
+        //             targets: clip,
+        //             x: '+=' + this.s,
+        //             repeat: 2,
+        //             yoyo: true,
+        //             ease: 'Sine.inOut',
+        //             duration: 100
+        //         });
+        //     });
 
             this.hold = this.add.image(
                 1000,
@@ -116,7 +142,7 @@ class Room1 extends AdventureScene {
 
             this.gun = this.add.image(
                 700,
-                730,
+                580,
                 'gun',
             )
 
@@ -204,18 +230,54 @@ class Room1 extends AdventureScene {
 
 class Room2 extends AdventureScene {
     constructor() {
-        super("Room2", "The second room has a long name (it truly does).");
+        super("Room2", "Room 2");
     }
 
     preload(){
         this.load.path = "./assets/";
         this.load.image('door', 'door.png');
         this.load.image('down', 'down.png');
+        this.load.image('hold', 'Hold.png');
+        this.load.image('doorb', 'doorB.png');
+        this.load.image('background', 'wallpaper.png');
 
 
 
     }
     onEnter() {
+
+        const roombg = this.add.image(0, 0, 'background');
+        roombg.setOrigin(0);
+        roombg.setDepth(0);
+
+        this.drawr = this.add.image(
+            400,
+            650,
+            'drawr',
+        )
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Drawr");
+
+            })
+            .on('pointerdown', () => {
+                this.gainItem('Red Key');
+                
+            })
+
+        this.drawr = this.add.image(
+            880,
+            650,
+            'drawr',
+        )
+        .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Drawr");
+
+            })
+            .on('pointerdown', () => {
+                this.showMessage("Empty");
+            })
 
         this.down1 = this.add.image(
             700,
@@ -233,24 +295,24 @@ class Room2 extends AdventureScene {
 
         
         this.door2 = this.add.image(
-            900,
-            500,
-            'door',
+            600,
+            560,
+            'doorb',
         )
+        this.door2.setScale(.5)
             .setInteractive()
             .on('pointerover', () => {
-                if (this.hasItem("wwwwkey")) {
+                if (this.hasItem("Blue Key")) {
                     this.showMessage("You've got the key for this door.");
                 } else {
                     this.showMessage("It's locked. Can you find a key?");
                 }
             })
             .on('pointerdown', () => {
-                if (this.hasItem("key")) {
+                if (this.hasItem("Blue Key")) {
                     //this.loseItem("key");
                     this.showMessage("*squeak*");
-                    door.setText("🚪 unlocked door");
-                    this.gotoScene('Room2');
+                    this.gotoScene('Room4');
                 }
             })
 
@@ -265,23 +327,33 @@ class Room2 extends AdventureScene {
         //         this.gotoScene('Room1');
         //     });
 
-        let finish = this.add.text(this.w * 0.6, this.w * 0.2, '(finish the game)')
-            .setInteractive()
-            .on('pointerover', () => {
-                this.showMessage('*giggles*');
-                this.tweens.add({
-                    targets: finish,
-                    x: this.s + (this.h - 2 * this.s) * Math.random(),
-                    y: this.s + (this.h - 2 * this.s) * Math.random(),
-                    ease: 'Sine.inOut',
-                    duration: 500
-                });
-            })
-            .on('pointerdown', () => this.gotoScene('outro'));
+    //     let finish = this.add.text(this.w * 0.6, this.w * 0.2, '(finish the game)')
+    //         .setInteractive()
+    //         .on('pointerover', () => {
+    //             this.showMessage('*giggles*');
+    //             this.tweens.add({
+    //                 targets: finish,
+    //                 x: this.s + (this.h - 2 * this.s) * Math.random(),
+    //                 y: this.s + (this.h - 2 * this.s) * Math.random(),
+    //                 ease: 'Sine.inOut',
+    //                 duration: 500
+    //             });
+    //         })
+    //         .on('pointerdown', () => this.gotoScene('outro'));
+
+        if (this.hasItem("Gun")) {
+            this.hold = this.add.image(
+                1000,
+                815,
+                'hold',
+            )
+        }
     }
     
 }
 
+
+//////////////////////////////////////////////////////////////////////////////////////////
 class Room3 extends AdventureScene {
     constructor() {
         super("Room3", "Room 3");
@@ -291,12 +363,73 @@ class Room3 extends AdventureScene {
         this.load.path = "./assets/";
         this.load.image('door', 'door.png');
         this.load.image('down', 'down.png');
+        this.load.image('hold', 'Hold.png');
+        this.load.image('background', 'wallpaper.png');
 
 
 
     }
     onEnter() {
 
+
+        const roombg = this.add.image(0, 0, 'background');
+        roombg.setOrigin(0);
+        roombg.setDepth(0);
+
+        this.drawr = this.add.image(
+            400,
+            650,
+            'drawr',
+        )
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Drawr");
+
+            })
+            .on('pointerdown', () => {
+                this.gainItem('Blue Key');
+                
+            })
+
+            this.drawr = this.add.image(
+                400,
+                550,
+                'drawr',
+            )
+                .setInteractive()
+                .on('pointerover', () => {
+                    this.showMessage("Drawr");
+    
+                })
+                .on('pointerdown', () => {
+                    this.gainItem('Empty');
+                    
+                })
+
+
+        //locked door
+        this.door1 = this.add.image(
+            800,
+            570,
+            'door',
+        )
+        this.door1.setScale(.75) //resize
+        .setInteractive()
+        .on('pointerover', () => {
+            if (this.hasItem("key")) {
+                this.showMessage("You've got the key for this door.");
+            } else {
+                this.showMessage("It's locked.");
+            }
+        })
+        .on('pointerdown', () => {
+            if (this.hasItem("key")) {
+                //this.loseItem("key");
+                this.showMessage("*squeak*");
+                door.setText("unlocked door");
+                this.gotoScene('Room2');
+            }
+        })
         this.down1 = this.add.image(
             700,
             950,
@@ -310,7 +443,16 @@ class Room3 extends AdventureScene {
         .on('pointerdown', () => {
             this.gotoScene('Room1');
         });
+        
+        if (this.hasItem("Gun")) {
+            this.hold = this.add.image(
+                1000,
+                815,
+                'hold',
+            )
+        }
     }
+    
 }
 
 class Room4 extends AdventureScene {
@@ -321,12 +463,23 @@ class Room4 extends AdventureScene {
         this.load.path = "./assets/";
         this.load.image('door', 'door.png');
         this.load.image('down', 'down.png');
+        this.load.image('hold', 'Hold.png');
+        this.load.image('background', 'wallpaper.png');
 
 
 
     }
     onEnter() {
-
+        const roombg = this.add.image(0, 0, 'background');
+        roombg.setOrigin(0);
+        roombg.setDepth(0);
+        if (this.hasItem("Gun")) {
+            this.hold = this.add.image(
+                1000,
+                815,
+                'hold',
+            )
+        }
     }
 }
 
@@ -338,12 +491,25 @@ class Room5 extends AdventureScene {
         this.load.path = "./assets/";
         this.load.image('door', 'door.png');
         this.load.image('down', 'down.png');
+        this.load.image('hold', 'Hold.png');
+        this.load.image('background', 'wallpaper.png');
 
 
 
     }
     onEnter() {
+        const roombg = this.add.image(0, 0, 'background');
+        roombg.setOrigin(0);
+        roombg.setDepth(0);
 
+        if (this.hasItem("Gun")) {
+            this.hold = this.add.image(
+                1000,
+                815,
+                'hold',
+            )
+            this.gun.destroy()
+        }
     }
 }
 
@@ -380,7 +546,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Intro, Room1, Room2, Room3, Outro],
+    scene: [Intro, Room1, Room2, Room3, Room4, Room5, Outro],
     title: "Adventure Game",
 });
 
