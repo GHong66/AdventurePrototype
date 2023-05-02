@@ -11,6 +11,7 @@ class Room1 extends AdventureScene {
         this.load.image('hold', 'Hold.png');
         this.load.image('drawr', 'drawr.png');
         this.load.image('zom', 'zom.png');
+        this.load.image('blood', 'blood.png');
         this.load.image('background', 'wallpaper.png');
 
     }
@@ -53,7 +54,19 @@ class Room1 extends AdventureScene {
         //     }
         // })
 
-        
+        this.drawr = this.add.image(
+            700,
+            500,
+            'blood',
+        )
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Writing");
+
+            })
+            .on('pointerdown', () => {
+                this.showMessage("R key... B... skull...");
+            })
 
         //DRAWRS
         this.drawr = this.add.image(
@@ -245,6 +258,7 @@ class Room2 extends AdventureScene {
         this.load.image('down', 'down.png');
         this.load.image('hold', 'Hold.png');
         this.load.image('doorb', 'doorB.png');
+        this.load.image('blood1', 'blood1.png');
         this.load.image('background', 'wallpaper.png');
 
 
@@ -255,6 +269,20 @@ class Room2 extends AdventureScene {
         const roombg = this.add.image(0, 0, 'background');
         roombg.setOrigin(0);
         roombg.setDepth(0);
+
+        this.drawr = this.add.image(
+            600,
+            770,
+            'blood1',
+        )
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Probably ketchup");
+
+            })
+            .on('pointerdown', () => {
+                this.showMessage("R key... B... skull...");
+            })
 
         this.drawr = this.add.image(
             400,
