@@ -7,35 +7,86 @@ class Room1 extends AdventureScene {
         this.load.path = "./assets/";
         this.load.image('door', 'door.png');
         this.load.image('down', 'down.png');
+        this.load.image('gun', 'gun.png');
+        this.load.image('hold', 'Hold.png');
+        this.load.image('background', 'wallpaper.png');
+
 
 
 
     }
 
     onEnter() {
+        
+        // this.door1 = this.add.image(
+        //         720,
+        //         540,
+        //         'background',
+        //     )
+
+        const roombg = this.add.image(0, 0, 'background');
+        roombg.setOrigin(0);
+        roombg.setDepth(0);
+
+        
+
+        //locked door
+        // this.door1 = this.add.image(
+        //     100,
+        //     400,
+        //     'door',
+        // )
+        // this.door1.setScale(.5) //resize
+        // .setInteractive()
+        // .on('pointerover', () => {
+        //     if (this.hasItem("key")) {
+        //         this.showMessage("You've got the key for this door.");
+        //     } else {
+        //         this.showMessage("It's locked. Can you find a key?");
+        //     }
+        // })
+        // .on('pointerdown', () => {
+        //     if (this.hasItem("key")) {
+        //         //this.loseItem("key");
+        //         this.showMessage("*squeak*");
+        //         door.setText("unlocked door");
+        //         this.gotoScene('Room2');
+        //     }
+        // })
+
+        this.door1 = this.add.image(
+            400,
+            570,
+            'door',
+        )
+        this.door1.setScale(.75) //resize
+        .setInteractive()
+        .on('pointerover', () => {
+           this.showMessage("Left Door");
+
+        })
+        .on('pointerdown', () => {
+                this.showMessage("*squeak*");
+                this.gotoScene('Room2');
+    
+        })
 
 
         this.door1 = this.add.image(
-            100,
-            400,
+            1040,
+            570,
             'door',
         )
-        this.door1.setScale(.5) //resize
+        this.door1.setScale(.75) //resize
         .setInteractive()
         .on('pointerover', () => {
-            if (this.hasItem("key")) {
-                this.showMessage("You've got the key for this door.");
-            } else {
-                this.showMessage("It's locked. Can you find a key?");
-            }
+           this.showMessage("Right Door");
+
         })
         .on('pointerdown', () => {
-            if (this.hasItem("key")) {
-                //this.loseItem("key");
                 this.showMessage("*squeak*");
-                door.setText("unlocked door");
-                this.gotoScene('Room2');
-            }
+                this.gotoScene('Room3');
+    
         })
 
 
@@ -56,46 +107,97 @@ class Room1 extends AdventureScene {
                 });
             });
 
-        let key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
-            .setFontSize(this.s * 2)
+            this.hold = this.add.image(
+                1000,
+                855,
+                'hold',
+            )
+            this.hold.alpha = 0;
+
+            this.gun = this.add.image(
+                700,
+                730,
+                'gun',
+            )
+
+        
             .setInteractive()
             .on('pointerover', () => {
-                this.showMessage("It's a nice key.")
+                this.showMessage("A gun")
             })
             .on('pointerdown', () => {
-                this.showMessage("You pick up the key.");
-                this.gainItem('key');
+                this.showMessage("You pick up the gun.");
+                this.gainItem('Gun');
                 this.tweens.add({
-                    targets: key,
+                    targets: this.gun,
                     y: `-=${2 * this.s}`,
                     alpha: { from: 1, to: 0 },
                     duration: 500,
-                    onComplete: () => key.destroy()
+                    onComplete: () => this.gun.destroy()
+                });
+                this.tweens.add({
+                    targets: this.hold,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 0, to: 1 },
+                    duration: 500,
                 });
             })
+
             
-            if (this.hasItem("key")) {
-                key.destroy()
+
+        
+            if (this.hasItem("Gun")) {
+                this.hold = this.add.image(
+                    1000,
+                    815,
+                    'hold',
+                )
+                this.gun.destroy()
             }
 
-        let door = this.add.text(this.w * 0.1, this.w * 0.15, "🚪 locked door")
-            .setFontSize(this.s * 2)
-            .setInteractive()
-            .on('pointerover', () => {
-                if (this.hasItem("key")) {
-                    this.showMessage("You've got the key for this door.");
-                } else {
-                    this.showMessage("It's locked. Can you find a key?");
-                }
-            })
-            .on('pointerdown', () => {
-                if (this.hasItem("key")) {
-                    //this.loseItem("key");
-                    this.showMessage("*squeak*");
-                    door.setText("🚪 unlocked door");
-                    this.gotoScene('Room2');
-                }
-            })
+        // let key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
+        //     .setFontSize(this.s * 2)
+        //     .setInteractive()
+        //     .on('pointerover', () => {
+        //         this.showMessage("It's a nice key.")
+        //     })
+        //     .on('pointerdown', () => {
+        //         this.showMessage("You pick up the key.");
+        //         this.gainItem('key');
+        //         this.tweens.add({
+        //             targets: key,
+        //             y: `-=${2 * this.s}`,
+        //             alpha: { from: 1, to: 0 },
+        //             duration: 500,
+        //             onComplete: () => key.destroy()
+        //         });
+        //     })
+            
+        //     if (this.hasItem("key")) {
+        //         key.destroy()
+        //     }
+
+        // let door = this.add.text(this.w * 0.1, this.w * 0.15, "🚪 locked door")
+        //     .setFontSize(this.s * 2)
+        //     .setInteractive()
+        //     .on('pointerover', () => {
+        //         if (this.hasItem("key")) {
+        //             this.showMessage("You've got the key for this door.");
+        //         } else {
+        //             this.showMessage("It's locked. Can you find a key?");
+        //         }
+        //     })
+        //     .on('pointerdown', () => {
+        //         if (this.hasItem("key")) {
+        //             //this.loseItem("key");
+        //             this.showMessage("*squeak*");
+        //             door.setText("🚪 unlocked door");
+        //             this.gotoScene('Room2');
+        //         }
+        //     })
+
+
+
 
     }
 }
@@ -116,11 +218,11 @@ class Room2 extends AdventureScene {
     onEnter() {
 
         this.down1 = this.add.image(
-            650,
-            900,
+            700,
+            950,
             'down',
         )
-        this.down1.setScale(.5) //resize
+        this.down1.setScale(.25) //resize
         .setInteractive()
         .on('pointerover', () => {
             this.showMessage("Go back");
@@ -129,17 +231,39 @@ class Room2 extends AdventureScene {
             this.gotoScene('Room1');
         });
 
-
-
-        this.add.text(this.w * 0.3, this.w * 0.4, "just go back")
-            .setFontSize(this.s * 2)
+        
+        this.door2 = this.add.image(
+            900,
+            500,
+            'door',
+        )
             .setInteractive()
             .on('pointerover', () => {
-                this.showMessage("You've got no other choice, really.");
+                if (this.hasItem("wwwwkey")) {
+                    this.showMessage("You've got the key for this door.");
+                } else {
+                    this.showMessage("It's locked. Can you find a key?");
+                }
             })
             .on('pointerdown', () => {
-                this.gotoScene('Room1');
-            });
+                if (this.hasItem("key")) {
+                    //this.loseItem("key");
+                    this.showMessage("*squeak*");
+                    door.setText("🚪 unlocked door");
+                    this.gotoScene('Room2');
+                }
+            })
+
+
+        // this.add.text(this.w * 0.3, this.w * 0.4, "just go back")
+        //     .setFontSize(this.s * 2)
+        //     .setInteractive()
+        //     .on('pointerover', () => {
+        //         this.showMessage("You've got no other choice, really.");
+        //     })
+        //     .on('pointerdown', () => {
+        //         this.gotoScene('Room1');
+        //     });
 
         let finish = this.add.text(this.w * 0.6, this.w * 0.2, '(finish the game)')
             .setInteractive()
@@ -160,16 +284,46 @@ class Room2 extends AdventureScene {
 
 class Room3 extends AdventureScene {
     constructor() {
-        super("Room3", "The second room has a long name (it truly does).");
+        super("Room3", "Room 3");
+    }
+
+    preload(){
+        this.load.path = "./assets/";
+        this.load.image('door', 'door.png');
+        this.load.image('down', 'down.png');
+
+
+
     }
     onEnter() {
 
+        this.down1 = this.add.image(
+            700,
+            950,
+            'down',
+        )
+        this.down1.setScale(.25) //resize
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage("Go back");
+        })
+        .on('pointerdown', () => {
+            this.gotoScene('Room1');
+        });
     }
 }
 
 class Room4 extends AdventureScene {
     constructor() {
-        super("Room4", "The second room has a long name (it truly does).");
+        super("Room4", "Room 4");
+    }
+    preload(){
+        this.load.path = "./assets/";
+        this.load.image('door', 'door.png');
+        this.load.image('down', 'down.png');
+
+
+
     }
     onEnter() {
 
@@ -178,7 +332,15 @@ class Room4 extends AdventureScene {
 
 class Room5 extends AdventureScene {
     constructor() {
-        super("Room5", "The second room has a long name (it truly does).");
+        super("Room5", "Room 5).");
+    }
+    preload(){
+        this.load.path = "./assets/";
+        this.load.image('door', 'door.png');
+        this.load.image('down', 'down.png');
+
+
+
     }
     onEnter() {
 
