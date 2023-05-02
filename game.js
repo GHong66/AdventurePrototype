@@ -327,6 +327,17 @@ class Room2 extends AdventureScene {
             this.gotoScene('Room1');
         });
 
+        this.tweens.add({
+                        targets: this.down1,
+                        y: this.down1.y + 10 ,
+                        duration: 1000,
+                        yoyo: true,
+                        repeat: -1,
+                    });
+
+        // game.add.tween(down1)
+        // .to({ y: down1.y + 10 }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
+
         
         this.door2 = this.add.image(
             600,
@@ -478,6 +489,14 @@ class Room3 extends AdventureScene {
         .on('pointerdown', () => {
             this.gotoScene('Room1');
         });
+
+        this.tweens.add({
+            targets: this.down1,
+            y: this.down1.y + 10 ,
+            duration: 1000,
+            yoyo: true,
+            repeat: -1,
+        });
         
         if (this.hasItem("Gun")) {
             this.hold = this.add.image(
@@ -526,10 +545,8 @@ class Room4 extends AdventureScene {
             }
         })
         .on('pointerdown', () => {
-            if (this.hasItem("key")) {
-                //this.loseItem("key");
-                this.showMessage("*squeak*");
-                door.setText("unlocked door");
+            if (this.hasItem("ZKey")) {
+                this.showMessage("Used ZKey");
                 this.gotoScene('Outro');
             }
         })
@@ -649,6 +666,14 @@ class Room5 extends AdventureScene {
                 this.gotoScene('Room3');
             });
 
+            this.tweens.add({
+                targets: this.down1,
+                y: this.down1.y + 10 ,
+                duration: 1000,
+                yoyo: true,
+                repeat: -1,
+            });
+
 
         if (this.hasItem("Gun")) {
             this.hold = this.add.image(
@@ -665,7 +690,7 @@ class Intro extends Phaser.Scene {
         super('intro')
     }
     create() {
-        this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+        this.add.text(50,50, "Rooms").setFontSize(50);
         this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
@@ -676,7 +701,7 @@ class Intro extends Phaser.Scene {
 
 class Outro extends Phaser.Scene {
     constructor() {
-        super('outro');
+        super('Outro');
     }
     create() {
         this.add.text(50, 50, "You escaped the cursed building.").setFontSize(50);
